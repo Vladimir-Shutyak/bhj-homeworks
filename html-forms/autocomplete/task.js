@@ -81,12 +81,33 @@ class Autocomplete {
         value: 'Содержимое атрибута value'
       }
     */
-    return [
-      {
-        text: 'Чубакка',
-        value: '1'
+      // console.log(this.input.length);
+      // this.input.selectedIndex = 2
+      // console.log(this.input.options[this.input.selectedIndex].text);
+      
+      let itemText=''
+      let searchResult = [];
+      
+      for (let i = 0; i < this.input.length; i++){
+        this.input.selectedIndex = i;
+        itemText = this.input.options[this.input.selectedIndex].text; 
+
+        if (itemText.includes(text)){
+          searchResult.push({
+            text: itemText,
+            value: i 
+          })
+        }
       }
-    ];
+    
+    return(searchResult);
+    
+    // return [
+    //   {
+    //     text: 'Чубакка',
+    //     value: '1'
+    //   }
+    // ];
   }
 }
 
