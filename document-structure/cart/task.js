@@ -2,6 +2,8 @@ let productDec = document.getElementsByClassName('product__quantity-control_dec'
 let productInc = document.getElementsByClassName('product__quantity-control_inc');
 let productAdd = document.getElementsByClassName('product__add');
 
+let productItem = document.getElementsByClassName('product__quantity');
+
 function prodDec(){
 
     if ( Number(this.nextElementSibling.textContent) > 1) {
@@ -35,57 +37,41 @@ return (newProdDiv);
 
 }
 
-
 function prodAdd(){
     let prodCart = document.querySelector('div.cart__products');
-    let prodCartExist = document.getElementsByClassName('cart__product');
-    let m = false;
+    let k = this.parentElement.parentElement.parentElement.getAttribute('data-id') ;
+    let n = Number (this.parentElement.parentElement.parentElement.querySelector('div.product__quantity-value').textContent);
     
-    if ( prodCart.childElementCount > 0 ) {
-        
-        for (let l = 0; l < prodCartExist.length; l++){
-            console.log('-'+prodCartExist[l].getAttribute('data-id')+'-');
-            if ( prodCartExist[l].getAttribute('data-id') === this.parentElement.parentElement.parentElement.getAttribute('data-id') ){
-                prodCartExist[l].querySelector('div.cart__product-count').textContent = Number (this.parentElement.parentElement.parentElement.querySelector('div.product__quantity-value').textContent);
-                m = true;
+    if ( prodCart.childElementCount > 0 ){    
+        let prodInCart = prodCart.getElementsByClassName('cart__product'); 
+        let arr = (Array.from(prodInCart).find(function(element){
+              
+        if ( element.getAttribute('data-id') === k ){    
+            element.querySelector('div.cart__product-count').textContent = Number(element.querySelector('div.cart__product-count').textContent) + n;
+            return(element);   
             }
-        
-        }
 
-        if (m == false){
+        }));
+           
+        if(arr == undefined) {
             prodCart.appendChild(createElement(
-                this.parentElement.parentElement.parentElement.getAttribute('data-id'), 
-                this.parentElement.parentElement.parentElement.querySelector('img').getAttribute('src'),
-                Number (this.parentElement.parentElement.parentElement.querySelector('div.product__quantity-value').textContent))
-            );
-        }
-   
-
-    }   
-
-
-    if ( prodCart.childElementCount === 0 ) {
-   
-        prodCart.appendChild(createElement(
             this.parentElement.parentElement.parentElement.getAttribute('data-id'), 
             this.parentElement.parentElement.parentElement.querySelector('img').getAttribute('src'),
-            Number (this.parentElement.parentElement.parentElement.querySelector('div.product__quantity-value').textContent))
-        );
+            Number (this.parentElement.parentElement.parentElement.querySelector('div.product__quantity-value').textContent))); 
+        }
     }
 
-}
+    else {
+        prodCart.appendChild(createElement(
+        this.parentElement.parentElement.parentElement.getAttribute('data-id'), 
+        this.parentElement.parentElement.parentElement.querySelector('img').getAttribute('src'),
+        Number (this.parentElement.parentElement.parentElement.querySelector('div.product__quantity-value').textContent)));  
+        }
+ 
+ }
 
-
-
-for (let i = 0; i < productDec.length; i++){
-    productDec[i].onclick = prodDec;
-}
-
-for (let j = 0; j < productInc.length; j++){
-    productInc[j].onclick = prodInc;
-}
-
-
-for (let k = 0; k < productAdd.length; k++){
-    productAdd[k].onclick = prodAdd;
+for (let i = 0; i < productItem.length; i++){
+    productItem[i].querySelector('div.product__quantity-control_dec').onclick = prodDec;
+    productItem[i].querySelector('div.product__quantity-control_inc').onclick = prodInc;
+    productItem[i].querySelector('div.product__add').onclick = prodAdd;
 }

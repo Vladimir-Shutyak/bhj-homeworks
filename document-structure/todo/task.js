@@ -24,7 +24,7 @@ function taskCreateElem(taskText){
 
  function taskAdd(){
 
-    if ( (taskDesc.value !='') ) {
+    if ( (taskDesc.value.trim() !='') ) {
         taskList.appendChild( taskCreateElem(taskDesc.value));
         let btmRemove = document.getElementsByClassName('task__remove');
         
